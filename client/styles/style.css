@@ -48,6 +48,10 @@ button:hover {
   background: #2e2e2e;
 }
 
+#fetchBtn {
+  margin-left: 5px;
+}
+
 #profile {
   margin-top: 20px;
   text-align: left;

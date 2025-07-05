@@ -2,23 +2,26 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Check your Codeforces profile, rating and insights.">
+    <meta name="keywords" content="codeforces, competitive programming, competitive coding, cf, cp">
+    <meta name="author" content="Piyush Jha">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>Codeforces Profile Insights</title>
-    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="icon" href="./assets/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./styles/style.css">
 </head>
 
 <body>
     <div class="container">
-        <h1>Codeforces Profile Insights</h1>
         <input type="text" id="handleInput" placeholder="Enter Codeforces handle">
-        <button onclick="fetchProfile()">Get Profile</button>
+        <button id="fetchBtn">Get Profile</button>
 
         <div id="profile"></div>
     </div>
 
-    <script src="scripts/script.js"></script>
+    <script type="module" src="./scripts/main.js"></script>
 </body>
 
 </html>
