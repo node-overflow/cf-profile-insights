@@ -1,0 +1,26 @@
+{
+  "name": "cf-insights",
+  "version": "1.0.0",
+  "description": "creating it for my personal use bcoz cf doesn't give ui friendly insights.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/node-overflow/cf-profile-insights.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/node-overflow/cf-profile-insights/issues"
+  },
+  "homepage": "https://github.com/node-overflow/cf-profile-insights#readme",
+  "dependencies": {
+    "axios": "^1.10.0",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
+}
