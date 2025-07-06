@@ -1,0 +1,47 @@
+.submission-grid {
+  display: grid;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.submission-card {
+  background: #fdfdfd;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid #eee;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease;
+}
+
+.submission-card:hover {
+  transform: translateY(-0.4px);
+}
+
+.problem-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.verdict {
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.verdict.ok {
+  color: #28a745; /* green */
+}
+
+.verdict.wronganswer,
+.verdict.failed {
+  color: #dc3545; /* red */
+}
+
+.verdict.runtimeerror {
+  color: #fd7e14; /* orange */
+}
+
+.lang {
+  color: #666;
+  font-size: 14px;
+}

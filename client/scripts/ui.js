@@ -1,4 +1,5 @@
 import { renderTagChart, renderMostUsedLanguageChart } from './charts.js';
+import { renderTagHeatmap } from './heatmaps.js';
 
 export function setLoading(containerId = "profile") {
   const div = document.getElementById(containerId);
@@ -15,22 +16,42 @@ export function showError(message, containerId = "profile") {
 }
 
 // 1. Profile Info
-export function showProfile(data) {
+export async function showProfile(data) {
   const div = document.getElementById("profile");
   if (!div || !data) return;
+
+  // Fetch user submissions
+  const res = await fetch(`https://codeforces.com/api/user.status?handle=${data.handle}`);
+  const submissions = (await res.json()).result;
+
+  const totalSolved = new Set(
+    submissions
+      .filter(s => s.verdict === "OK")
+      .map(s => `${s.problem.contestId}-${s.problem.index}`)
+  ).size;
 
   div.innerHTML = `
     <div class="profile-box">
       <img src="${data.avatar}" alt="${data.handle}'s avatar" class="profile-avatar">
       <div class="profile-info">
         <h3>${data.handle}</h3>
+        <p><strong>Name:</strong> ${data.firstName || ''} ${data.lastName || ''}</p>
+        <p><strong>Country:</strong> ${data.country || 'N/A'}</p>
+        <p><strong>City:</strong> ${data.city || 'N/A'}</p>
+        <p><strong>Organization:</strong> ${data.organization || 'N/A'}</p>
+        <p><strong>Total Problems Solved:</strong> ${totalSolved}</p>
         <p><strong>Rank:</strong> ${data.rank || 'N/A'}</p>
         <p><strong>Rating:</strong> ${data.rating || 'N/A'}</p>
         <p><strong>Max Rank:</strong> ${data.maxRank || 'N/A'}</p>
         <p><strong>Max Rating:</strong> ${data.maxRating || 'N/A'}</p>
+        <p><strong>Contribution:</strong> ${data.contribution}</p>
+        <p><strong>Friends:</strong> ${data.friendOfCount}</p>
+        <p><strong>Last Online:</strong> ${new Date(data.lastOnlineTimeSeconds * 1000).toLocaleString()}</p>
+        <p><strong>Joined:</strong> ${new Date(data.registrationTimeSeconds * 1000).toLocaleString()}</p>
+        <p><a href="https://codeforces.com/profile/${data.handle}" target="_blank">View Full Profile</a></p>
       </div>
     </div>
-    `;
+  `;
 }
 
 // 2. Rating History
@@ -54,13 +75,29 @@ export function showRecentSubmissions(data) {
   if (!div || !Array.isArray(data) || data.length === 0) return;
 
   const content = data.slice(0, 4).map(sub => {
-    if (!sub.problem?.name || !sub.verdict || !sub.programmingLanguage) return '';
-    return `<p>${sub.problem.name} — ${sub.verdict} — ${sub.programmingLanguage}</p>`;
+    const name = sub.problem?.name;
+    const verdict = sub.verdict;
+    const lang = sub.programmingLanguage;
+
+    if (!name || !verdict || !lang) return '';
+
+    return `
+      <div class="submission-card">
+        <h5 class="problem-name">${name}</h5>
+        <p>
+          <span class="verdict ${verdict.toLowerCase()}">${verdict}</span>
+          <span class="lang">${lang}</span>
+        </p>
+      </div>
+    `;
   }).filter(Boolean).join('');
 
   if (!content) return;
 
-  div.innerHTML = `<h4>Recent Submissions</h4>` + content;
+  div.innerHTML = `
+    <h4>Recent Submissions</h4>
+    <div class="submission-grid">${content}</div>
+  `;
 }
 
 // 4. Blog Entries
@@ -118,7 +155,25 @@ export function showMostUsedLanguage(language) {
   else infoDiv.innerHTML = `<p>No data available.</p>`;
 }
 
-// 7. Performance Trend
+// 7. Heatmaps
+export function showTagHeatmap(submissions) {
+  const div = document.getElementById("tagHeatmap");
+  if (!div || !Array.isArray(submissions) || submissions.length === 0) return;
+
+  div.innerHTML = `
+    <h4>Tag Heatmap</h4>
+    <div style="overflow-x:auto; max-width: 100%;">
+      <canvas id="tagHeatmapCanvas"></canvas>
+    </div>
+  `;
+
+  console.log("Real submissions:", submissions);
+
+
+  renderTagHeatmap("tagHeatmapCanvas", submissions);
+}
+
+// 8. Performance Trend
 export function showPerformanceTrend(data) {
   const div = document.getElementById("performance");
   if (!div || !Array.isArray(data) || data.length === 0) return;

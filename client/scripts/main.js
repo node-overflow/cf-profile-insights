@@ -15,6 +15,7 @@ import {
     showRecentSubmissions,
     showBlogEntries,
     showTagFrequency,
+    showTagHeatmap,
     showMostUsedLanguage,
     showPerformanceTrend,
     showError
@@ -59,6 +60,7 @@ async function fetchEverything() {
         showRecentSubmissions(submissions);
         showBlogEntries(blogs);
         showTagFrequency(tags);
+        showTagHeatmap(submissions);
         showMostUsedLanguage(language);
         showPerformanceTrend(trend);
     } catch (err) {
