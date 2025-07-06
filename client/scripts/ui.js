@@ -1,18 +1,16 @@
 import { renderTagChart, renderMostUsedLanguageChart } from './charts.js';
 import { renderTagHeatmap } from './heatmaps.js';
+import { renderDifficultyChart } from './chartsAndBars/barchart.js';
+import { renderVerdictChart } from './chartsAndBars/piechart.js';
 
 export function setLoading(containerId = "profile") {
   const div = document.getElementById(containerId);
-  if (div) {
-    div.innerHTML = `<p>Loading...</p>`;
-  }
+  if (div) div.innerHTML = `<p>Loading...</p>`;
 }
 
 export function showError(message, containerId = "profile") {
   const div = document.getElementById(containerId);
-  if (div) {
-    div.innerHTML = `<p style="color:red;">Error: ${message}</p>`;
-  }
+  if (div) div.innerHTML = `<p style="color:red;">Error: ${message}</p>`;
 }
 
 // 1. Profile Info
@@ -20,7 +18,6 @@ export async function showProfile(data) {
   const div = document.getElementById("profile");
   if (!div || !data) return;
 
-  // Fetch user submissions
   const res = await fetch(`https://codeforces.com/api/user.status?handle=${data.handle}`);
   const submissions = (await res.json()).result;
 
@@ -41,7 +38,7 @@ export async function showProfile(data) {
         <p><strong>Organization:</strong> ${data.organization || 'N/A'}</p>
         <p><strong>Total Problems Solved:</strong> ${totalSolved}</p>
         <p><strong>Rank:</strong> ${data.rank || 'N/A'}</p>
-        <p><strong>Rating:</strong> ${data.rating || 'N/A'}</p>
+        <p><strong>Rating:</strong> ${data.rating || 'unrated'}</p>
         <p><strong>Max Rank:</strong> ${data.maxRank || 'N/A'}</p>
         <p><strong>Max Rating:</strong> ${data.maxRating || 'N/A'}</p>
         <p><strong>Contribution:</strong> ${data.contribution}</p>
@@ -59,15 +56,20 @@ export function showRatingHistory(data) {
   const div = document.getElementById("ratingHistory");
   if (!div || !Array.isArray(data) || data.length === 0) return;
 
-  const content = data.map(rating => {
-    if (!rating.contestName || rating.newRating === undefined) return '';
-    return `<p>Contest: ${rating.contestName} — ${rating.newRating}</p>`;
-  }).filter(Boolean).join('');
+  const content = data
+    .slice(-4)
+    .map(rating => {
+      if (!rating.contestName || rating.newRating === undefined) return '';
+      return `<p>Contest: ${rating.contestName} — ${rating.newRating}</p>`;
+    })
+    .filter(Boolean)
+    .join('');
 
   if (!content) return;
 
-  div.innerHTML = `<h4>Rating History</h4>` + content;
+  div.innerHTML = `<h4>Recent Rating History</h4>` + content;
 }
+
 
 // 3. Recent Submissions
 export function showRecentSubmissions(data) {
@@ -105,10 +107,14 @@ export function showBlogEntries(data) {
   const div = document.getElementById("blogs");
   if (!div || !Array.isArray(data) || data.length === 0) return;
 
-  const content = data.map(entry => {
-    if (!entry.id || !entry.title) return '';
-    return `<p><a href="https://codeforces.com/blog/entry/${entry.id}" target="_blank">${entry.title}</a></p>`;
-  }).filter(Boolean).join('');
+  const content = data
+    .slice(0, 2)
+    .map(entry => {
+      if (!entry.id || !entry.title) return '';
+      return `<p><a href="https://codeforces.com/blog/entry/${entry.id}" target="_blank">${entry.title}</a></p>`;
+    })
+    .filter(Boolean)
+    .join('');
 
   if (!content) return;
 
@@ -178,12 +184,64 @@ export function showPerformanceTrend(data) {
   const div = document.getElementById("performance");
   if (!div || !Array.isArray(data) || data.length === 0) return;
 
-  const content = data.map(p => {
-    if (!p.contestName || p.newRating === undefined || p.delta === undefined || p.rank === undefined) return '';
-    return `<p>${p.contestName}: ${p.newRating} (Δ${p.delta}, Rank: ${p.rank})</p>`;
-  }).filter(Boolean).join('');
+  const content = data
+    .slice(-4)
+    .map(p => {
+      if (!p.contestName || p.newRating === undefined || p.delta === undefined || p.rank === undefined) return '';
+      return `<p>${p.contestName}: ${p.newRating} (Δ${p.delta}, Rank: ${p.rank})</p>`;
+    })
+    .filter(Boolean)
+    .join('');
 
-  if (!content) return;
+  if (!content) {
+    div.innerHTML = '';
+    return;
+  }
 
   div.innerHTML = `<h4>Performance Trend</h4>` + content;
+}
+
+
+// 9. Difficulty Chart
+export function showDifficultyDistribution(submissions) {
+  const div = document.getElementById("difficulty");
+  if (!div || !Array.isArray(submissions)) return;
+
+  const solved = submissions.filter(s => s.verdict === "OK");
+  const difficultyCount = {};
+
+  for (const s of solved) {
+    const rating = s.problem.rating;
+    if (!rating) continue;
+    difficultyCount[rating] = (difficultyCount[rating] || 0) + 1;
+  }
+
+  div.innerHTML = `
+    <h4>Problem Difficulty Distribution</h4>
+    <canvas id="difficultyChart"></canvas>
+  `;
+
+  renderDifficultyChart(difficultyCount);
+}
+
+// 10. Verdict Breakdown
+export function showVerdictBreakdown(submissions) {
+  const div = document.getElementById("verdicts");
+  if (!div || !Array.isArray(submissions)) return;
+
+  const verdictCount = {};
+  for (const s of submissions) {
+    const v = s.verdict;
+    if (!v) continue;
+    verdictCount[v] = (verdictCount[v] || 0) + 1;
+  }
+
+  div.innerHTML = `
+  <h4>Submission Verdict Breakdown</h4>
+  <div style="max-width: 600px; margin: auto;">
+    <canvas id="verdictChart" width="600" height="600"></canvas>
+  </div>
+`;
+
+  renderVerdictChart(verdictCount);
 }

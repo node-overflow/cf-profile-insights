@@ -18,6 +18,8 @@ import {
     showTagHeatmap,
     showMostUsedLanguage,
     showPerformanceTrend,
+    showDifficultyDistribution,
+    showVerdictBreakdown,
     showError
 } from './ui.js';
 
@@ -63,6 +65,8 @@ async function fetchEverything() {
         showTagHeatmap(submissions);
         showMostUsedLanguage(language);
         showPerformanceTrend(trend);
+        showDifficultyDistribution(submissions);
+        showVerdictBreakdown(submissions);
     } catch (err) {
         console.error("Error fetching user data:", err);
         showError(err.message || "Something went wrong.");
