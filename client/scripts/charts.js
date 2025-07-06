@@ -31,7 +31,6 @@ export function renderTagChart(tagData) {
         data: {
             labels,
             datasets: [{
-                label: 'Solved Problems by Tag',
                 data: counts,
                 backgroundColor: backgroundColors,
                 borderColor: 'white',
@@ -44,7 +43,6 @@ export function renderTagChart(tagData) {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Solved Problem Tags',
                     font: { size: 18 }
                 },
                 legend: {

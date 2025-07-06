@@ -128,8 +128,8 @@ export function showTagFrequency(data) {
 
   div.innerHTML = `
     <h4>Solved Problem Tags</h4>
-    <div style="max-width: 500px;">
-      <canvas id="tagsChart"></canvas>
+    <div style="max-width: 600px; margin: auto;">
+    <canvas id="tagsChart" width="500" height="500"></canvas>
     </div>
   `;
   renderTagChart(data);
@@ -143,8 +143,9 @@ export function showMostUsedLanguage(language) {
   div.innerHTML = `
     <h4>Most Used Language</h4>
     <div id="languageText"></div>
-    <div style="max-width: 400px;">
-      <canvas id="languageChart"></canvas>
+    
+    <div style="max-width: 400px; margin: auto;">
+    <canvas id="languageChart" width="400" height="400"></canvas>
     </div>
   `;
 
@@ -168,8 +169,8 @@ export function showTagHeatmap(submissions) {
 
   div.innerHTML = `
     <h4>Tag Heatmap</h4>
-    <div style="overflow-x:auto; max-width: 100%;">
-      <canvas id="tagHeatmapCanvas"></canvas>
+    <div style="max-width: 600px; margin: auto;">
+    <canvas id="tagHeatmapCanvas" width="500" height="500"></canvas>
     </div>
   `;
 
@@ -218,7 +219,9 @@ export function showDifficultyDistribution(submissions) {
 
   div.innerHTML = `
     <h4>Problem Difficulty Distribution</h4>
+    <div style="max-width: 100%;">
     <canvas id="difficultyChart"></canvas>
+    </div>
   `;
 
   renderDifficultyChart(difficultyCount);
@@ -238,8 +241,8 @@ export function showVerdictBreakdown(submissions) {
 
   div.innerHTML = `
   <h4>Submission Verdict Breakdown</h4>
-  <div style="max-width: 600px; margin: auto;">
-    <canvas id="verdictChart" width="600" height="600"></canvas>
+  <div style="max-width: 500px; margin: auto;">
+    <canvas id="verdictChart" width="500" height="500"></canvas>
   </div>
 `;
 
