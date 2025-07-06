@@ -1,20 +1,65 @@
-import { fetchUserProfile } from './api.js';
-import { setLoading, showProfile, showError } from './ui.js';
+import {
+    fetchUserProfile,
+    fetchUserRating,
+    fetchUserStatus,
+    fetchUserBlogEntries,
+    fetchSolvedProblemTags,
+    fetchMostUsedLanguage,
+    fetchPerformanceTrend
+} from './api.js';
 
-async function fetchProfile() {
+import {
+    setLoading,
+    showProfile,
+    showRatingHistory,
+    showRecentSubmissions,
+    showBlogEntries,
+    showTagFrequency,
+    showMostUsedLanguage,
+    showPerformanceTrend,
+    showError
+} from './ui.js';
+
+async function fetchEverything() {
     const handle = document.getElementById("handleInput").value.trim();
     if (!handle) {
-        alert("Please enter a cf handle.");
+        alert("Enter Codeforces handle!");
         return;
     }
 
-    setLoading();
+    setLoading("profile");
 
     try {
-        const data = await fetchUserProfile(handle);
-        showProfile(data);
+        const [
+            profile,
+            rating,
+            submissions,
+            blogs,
+            tags,
+            language,
+            trend
+        ] = await Promise.all([
+            fetchUserProfile(handle),
+            fetchUserRating(handle),
+            fetchUserStatus(handle),
+            fetchUserBlogEntries(handle),
+            fetchSolvedProblemTags(handle),
+            fetchMostUsedLanguage(handle),
+            fetchPerformanceTrend(handle)
+        ]);
+
+        showProfile(profile);
+        showRatingHistory(rating);
+        showRecentSubmissions(submissions);
+        showBlogEntries(blogs);
+        showTagFrequency(tags);
+        showMostUsedLanguage(language);
+        showPerformanceTrend(trend);
+
     }
-    catch (err) { showError(err.message); }
+    catch (err) {
+        showError(err.message);
+    }
 }
 
-document.getElementById("fetchBtn").addEventListener("click", fetchProfile);
+document.getElementById("fetchBtn").addEventListener("click", fetchEverything);

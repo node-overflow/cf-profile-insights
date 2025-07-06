@@ -59,6 +59,10 @@ button:hover {
   color: #333;
 }
 
+.tal {
+  text-align: left;
+}
+
 @media (max-width: 768px) {
   .container {
     max-width: 95%;

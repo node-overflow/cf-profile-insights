@@ -14,16 +14,44 @@ async function getUserRating(handle) {
   return res.data.result;
 }
 
-async function getUserStatus(handle, from = 1, count = 10) {
-  const res = await axios.get(`${BASE_URL}/user.status?handle=${handle}&from=${from}&count=${count}`);
+async function getUserStatus(handle) {
+  try {
+    const response = await fetch(`https://codeforces.com/api/user.status?handle=${handle}`);
 
-  return res.data.result;
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (data.status !== "OK") {
+      throw new Error(data.comment || "Unknown CF API error");
+    }
+
+    return data.result;
+  }
+  catch (err) {
+    console.error("Error in getUserStatus:", err.message);
+    throw err;
+  }
 }
 
 async function getUserBlogEntries(handle) {
-  const res = await axios.get(`${BASE_URL}/user.blogEntries?handle=${handle}`);
+  try {
+    const response = await fetch(`https://codeforces.com/api/user.blogEntries?handle=${handle}`);
+    const data = await response.json();
 
-  return res.data.result;
+    if (data.status !== "OK") {
+      console.warn(`CF API warning: ${data.comment}`);
+      return [];
+    }
+
+    return data.result;
+  }
+  catch (err) {
+    console.error("Error in getUserBlogEntries:", err.message);
+    throw err;
+  }
 }
 
 async function getUserAvatarUrl(handle) {
