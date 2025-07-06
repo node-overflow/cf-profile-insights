@@ -1,5 +1,6 @@
 let tagChartInstance = null;
 
+// 1. Problem tags chart
 export function renderTagChart(tagData) {
     const ctx = document.getElementById('tagsChart');
     if (!ctx) {
@@ -55,6 +56,64 @@ export function renderTagChart(tagData) {
                             const label = context.label || '';
                             const value = context.parsed;
                             return `${label}: ${value}`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+
+// 2. language chart
+export function renderMostUsedLanguageChart(languageData) {
+    const ctx = document.getElementById('languageChart');
+    if (!ctx || !languageData) return;
+
+    let chartData;
+    if (typeof languageData === 'string') {
+        chartData = {
+            labels: [languageData],
+            datasets: [{
+                label: 'Usage Count',
+                data: [1],
+                backgroundColor: ['#4bc0c0'],
+                borderColor: ['#fff'],
+                borderWidth: 2
+            }]
+        };
+    }
+    else {
+        const label = languageData.language || 'Unknown';
+        const count = languageData.count || 0;
+
+        chartData = {
+            labels: [label, 'Others'],
+            datasets: [{
+                label: 'Usage Count',
+                data: [count, 100 - count],
+                backgroundColor: ['#36a2eb', '#e0e0e0'],
+                borderColor: ['#fff', '#fff'],
+                borderWidth: 2
+            }]
+        };
+    }
+
+    if (window.languageChartInstance) window.languageChartInstance.destroy();
+
+    window.languageChartInstance = new Chart(ctx, {
+        type: 'doughnut',
+        data: chartData,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            return `${context.label}: ${context.raw}`;
                         }
                     }
                 }
