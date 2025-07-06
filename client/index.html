@@ -9,7 +9,9 @@
     <meta name="author" content="Piyush Jha">
     <meta name="mobile-web-app-capable" content="yes">
     <title>Codeforces Profile Insights</title>
+
     <link rel="icon" href="./assets/images/favicon.ico" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <link rel="stylesheet" href="./styles/style.css">
 </head>
 
@@ -22,7 +24,10 @@
         <div id="ratingHistory" class="tal"></div>
         <div id="submissions" class="tal"></div>
         <div id="blogs" class="tal"></div>
-        <div id="tags" class="tal"></div>
+        <div id="tags" class="tal">
+            <h4>Solved Problem Tags</h4>
+            <canvas id="tagsChart" width="400" height="400"></canvas>
+        </div>
         <div id="language" class="tal"></div>
         <div id="performance" class="tal"></div>
 

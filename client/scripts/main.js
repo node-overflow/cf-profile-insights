@@ -21,9 +21,15 @@ import {
 } from './ui.js';
 
 async function fetchEverything() {
-    const handle = document.getElementById("handleInput").value.trim();
+    const handleInput = document.getElementById("handleInput");
+    if (!handleInput) {
+        console.error("Input element #handleInput not found.");
+        return;
+    }
+
+    const handle = handleInput.value.trim();
     if (!handle) {
-        alert("Enter Codeforces handle!");
+        alert("Please enter a Codeforces handle!");
         return;
     }
 
@@ -55,11 +61,12 @@ async function fetchEverything() {
         showTagFrequency(tags);
         showMostUsedLanguage(language);
         showPerformanceTrend(trend);
-
-    }
-    catch (err) {
-        showError(err.message);
+    } catch (err) {
+        console.error("Error fetching user data:", err);
+        showError(err.message || "Something went wrong.");
     }
 }
 
-document.getElementById("fetchBtn").addEventListener("click", fetchEverything);
+const fetchBtn = document.getElementById("fetchBtn");
+if (fetchBtn) fetchBtn.addEventListener("click", fetchEverything);
+else console.warn("Button #fetchBtn not found in DOM.");
