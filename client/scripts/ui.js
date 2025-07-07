@@ -1,7 +1,8 @@
-import { renderTagChart, renderMostUsedLanguageChart } from './charts.js';
-import { renderTagHeatmap } from './heatmaps.js';
+import { renderTagChart, renderMostUsedLanguageChart } from './chartsAndBars/charts.js';
+import { renderTagHeatmap } from './chartsAndBars/heatmaps.js';
 import { renderDifficultyChart } from './chartsAndBars/barchart.js';
 import { renderVerdictChart } from './chartsAndBars/piechart.js';
+import { renderActivityHeatmap } from './chartsAndBars/activity_heatmap.js';
 
 export function setLoading(containerId = "profile") {
   const div = document.getElementById(containerId);
@@ -247,4 +248,13 @@ export function showVerdictBreakdown(submissions) {
 `;
 
   renderVerdictChart(verdictCount);
+}
+
+// 11. Activity Heatmap
+export function showActivityHeatmap(submissions) {
+  const div = document.getElementById("activityCalendar");
+  if (!div || !Array.isArray(submissions)) return;
+
+  div.innerHTML = `<h4>Daily Submission Activity</h4>`;
+  renderActivityHeatmap("activityCalendar", submissions);
 }

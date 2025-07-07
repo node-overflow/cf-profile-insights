@@ -1,4 +1,3 @@
-// charts.js
 export function renderTagHeatmap(canvasId, submissions) {
   if (!Array.isArray(submissions) || submissions.length === 0) return;
 
@@ -44,7 +43,7 @@ export function renderTagHeatmap(canvasId, submissions) {
   }));
 
   const ctx = document.getElementById(canvasId).getContext("2d");
-  ctx.canvas.height = tags.length * 18; // Responsive height
+  ctx.canvas.height = tags.length * 18;
 
   if (window.tagHeatmapChartInstance) {
     window.tagHeatmapChartInstance.destroy();

@@ -20,7 +20,8 @@ import {
     showPerformanceTrend,
     showDifficultyDistribution,
     showVerdictBreakdown,
-    showError
+    showError,
+    showActivityHeatmap
 } from './ui.js';
 
 async function fetchEverything() {
@@ -67,6 +68,7 @@ async function fetchEverything() {
         showPerformanceTrend(trend);
         showDifficultyDistribution(submissions);
         showVerdictBreakdown(submissions);
+        showActivityHeatmap(submissions);
     } catch (err) {
         console.error("Error fetching user data:", err);
         showError(err.message || "Something went wrong.");

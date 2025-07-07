@@ -29,19 +29,29 @@
 }
 
 .verdict.ok {
-  color: #28a745; /* green */
+  color: #28a745;
 }
 
 .verdict.wronganswer,
 .verdict.failed {
-  color: #dc3545; /* red */
+  color: #dc3545;
 }
 
 .verdict.runtimeerror {
-  color: #fd7e14; /* orange */
+  color: #fd7e14;
 }
 
 .lang {
   color: #666;
   font-size: 14px;
+}
+
+.heatmap-grid {
+  max-width: 100%;
+  margin: auto;
+}
+
+.heatmap-grid div:hover {
+  outline: 1px solid #000;
+  cursor: pointer;
 }
