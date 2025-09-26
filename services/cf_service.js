@@ -21,18 +21,6 @@ async function getUserStatus(handle) {
   return data.result;
 }
 
-async function getUserBlogEntries(handle) {
-  const res = await axios.get(`${BASE_URL}/user.blogEntries?handle=${handle}`);
-  const data = res.data;
-
-  if (data.status !== "OK") {
-    console.warn(`CF API warning: ${data.comment}`);
-    return [];
-  }
-
-  return data.result;
-}
-
 async function getUserAvatarUrl(handle) {
   const user = await getUserInfo(handle);
   return user.titlePhoto || null;
@@ -63,11 +51,6 @@ async function getProblemSet(problemsLimit = 1000) {
 async function getProblemStatistics() {
   const res = await axios.get(`${BASE_URL}/problemset.problems`);
   return res.data.result.statistics;
-}
-
-async function getBlogEntry(blogEntryId) {
-  const res = await axios.get(`${BASE_URL}/blogEntry.view?blogEntryId=${blogEntryId}`);
-  return res.data.result;
 }
 
 async function getRecentActions(maxCount = 10) {
@@ -242,14 +225,12 @@ module.exports = {
   getUserInfo,
   getUserRating,
   getUserStatus,
-  getUserBlogEntries,
   getUserAvatarUrl,
   getContests,
   getContestStandings,
   getContestRatingChanges,
   getProblemSet,
   getProblemStatistics,
-  getBlogEntry,
   getRecentActions,
   getAcceptedSubmissions,
   getSolvedTagFrequency,

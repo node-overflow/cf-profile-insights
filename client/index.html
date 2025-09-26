@@ -9,30 +9,53 @@
     <meta name="author" content="Piyush Jha">
     <meta name="mobile-web-app-capable" content="yes">
     <title>Codeforces Profile Insights</title>
-
     <link rel="icon" href="./assets/images/favicon.ico" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="./styles/style.css">
 </head>
 
-<body>
-    <div class="container">
-        <input type="text" id="handleInput" placeholder="Enter Codeforces handle">
-        <button id="fetchBtn">Get Profile</button>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+    <header class="bg-white shadow-sm">
+        <div class="w-full px-6 py-5 flex justify-center">
+            <h1 class="text-2xl font-semibold text-black">📊 Codeforces Profile Insights 📊</h1>
+        </div>
+    </header>
 
-        <div id="profile"></div>
-        <div id="tags" class=" tal"></div>
-        <div id="language" class=" tal"></div>
-        <div id="difficulty" class="tal"></div>
-        <div id="verdicts" class="tal"></div>
-        <div id="tagHeatmap" class="tal"></div>
-        <div id="activityCalendar" class="tal"></div>
-        <div id="submissions" class="tal"></div>
-        <div id="ratingHistory" class="tal"></div>
-        <div id="performance" class="tal"></div>
-        <div id="blogs" class="tal"></div>
+    <main class="flex-1 w-full px-6 py-8">
+        <div class="bg-white rounded-xl shadow-md p-6 mb-8 max-w-3xl mx-auto">
+            <label for="handleInput" class="block text-lg font-medium text-gray-700 mb-2">Enter Codeforces
+                Handle</label>
+            <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+                <input type="text" id="handleInput"
+                    class="w-full sm:flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                    placeholder="Enter Codeforces handle" value="node_overflow">
+                <button id="fetchBtn" class="px-6 py-3 text-white font-medium rounded-lg transition">
+                    Get Profile
+                </button>
+            </div>
+        </div>
 
-    </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <div id="profile" class="bg-white rounded-xl shadow p-6"></div>
+            <div id="tags" class="tal bg-white rounded-xl shadow p-6"></div>
+            <div id="language" class="tal bg-white rounded-xl shadow p-6"></div>
+            <div id="difficulty" class="tal bg-white rounded-xl shadow p-6"></div>
+            <div id="verdicts" class="tal bg-white rounded-xl shadow p-6"></div>
+            <div id="tagHeatmap" class="tal bg-white rounded-xl shadow p-6"></div>
+            <div id="submissions" class="tal bg-white rounded-xl shadow p-6"></div>
+            <div id="ratingHistory" class="tal bg-white rounded-xl shadow p-6"></div>
+            <div id="performance" class="tal bg-white rounded-xl shadow p-6"></div>
+            <div id="activityCalendar"
+                class="tal bg-white rounded-xl shadow p-6 overflow-x-auto overflow-y-hidden max-w-full"></div>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t mt-8">
+        <div class="w-full px-6 py-6 text-sm text-gray-500 text-center">
+            &copy; 2025 Codeforces Profile Insights. Made by Piyush Jha.
+        </div>
+    </footer>
 
     <script type="module" src="./scripts/main.js"></script>
 </body>

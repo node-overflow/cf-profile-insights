@@ -4,7 +4,6 @@ async function fetchJSON(url) {
   return res.json();
 }
 
-// --------------------------------- USER ---------------------------------------------------------------
 export async function fetchUserProfile(handle) {
   return fetchJSON(`/user/${handle}`);
 }
@@ -15,10 +14,6 @@ export async function fetchUserRating(handle) {
 
 export async function fetchUserStatus(handle) {
   return fetchJSON(`/user/${handle}/status`);
-}
-
-export async function fetchUserBlogEntries(handle) {
-  return fetchJSON(`/user/${handle}/blog`);
 }
 
 export async function fetchMostUsedLanguage(handle) {
@@ -77,7 +72,6 @@ export async function fetchSolvedProblemsGroupedByTag(handle) {
   return fetchJSON(`/user/${handle}/grouped-tags`);
 }
 
-// --------------------------------- CONTEST ---------------------------------------------------------------
 export async function fetchContests() {
   return fetchJSON(`/contests`);
 }
@@ -90,7 +84,6 @@ export async function fetchContestRatingChanges(contestId) {
   return fetchJSON(`/contest/${contestId}/rating-changes`);
 }
 
-// --------------------------------- PROBLEM ---------------------------------------------------------------
 export async function fetchProblemSet() {
   return fetchJSON(`/problemset`);
 }
@@ -103,12 +96,6 @@ export async function fetchProblemById(problemId) {
   return fetchJSON(`/problem/${problemId}`);
 }
 
-// --------------------------------- BLOG ---------------------------------------------------------------
-export async function fetchBlogEntry(blogEntryId) {
-  return fetchJSON(`/blog/${blogEntryId}`);
-}
-
-// --------------------------------- RECETNT ACTIONS ---------------------------------------------------------------
 export async function fetchRecentActions() {
   return fetchJSON(`/recent-actions`);
 }

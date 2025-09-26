@@ -2,7 +2,6 @@ import {
     fetchUserProfile,
     fetchUserRating,
     fetchUserStatus,
-    fetchUserBlogEntries,
     fetchSolvedProblemTags,
     fetchMostUsedLanguage,
     fetchPerformanceTrend
@@ -13,7 +12,6 @@ import {
     showProfile,
     showRatingHistory,
     showRecentSubmissions,
-    showBlogEntries,
     showTagFrequency,
     showTagHeatmap,
     showMostUsedLanguage,
@@ -44,7 +42,6 @@ async function fetchEverything() {
             profile,
             rating,
             submissions,
-            blogs,
             tags,
             language,
             trend
@@ -52,7 +49,6 @@ async function fetchEverything() {
             fetchUserProfile(handle),
             fetchUserRating(handle),
             fetchUserStatus(handle),
-            fetchUserBlogEntries(handle),
             fetchSolvedProblemTags(handle),
             fetchMostUsedLanguage(handle),
             fetchPerformanceTrend(handle)
@@ -61,7 +57,6 @@ async function fetchEverything() {
         showProfile(profile);
         showRatingHistory(rating);
         showRecentSubmissions(submissions);
-        showBlogEntries(blogs);
         showTagFrequency(tags);
         showTagHeatmap(submissions);
         showMostUsedLanguage(language);
@@ -76,5 +71,6 @@ async function fetchEverything() {
 }
 
 const fetchBtn = document.getElementById("fetchBtn");
+
 if (fetchBtn) fetchBtn.addEventListener("click", fetchEverything);
 else console.warn("Button #fetchBtn not found in DOM.");

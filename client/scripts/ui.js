@@ -103,26 +103,7 @@ export function showRecentSubmissions(data) {
   `;
 }
 
-// 4. Blog Entries
-export function showBlogEntries(data) {
-  const div = document.getElementById("blogs");
-  if (!div || !Array.isArray(data) || data.length === 0) return;
-
-  const content = data
-    .slice(0, 2)
-    .map(entry => {
-      if (!entry.id || !entry.title) return '';
-      return `<p><a href="https://codeforces.com/blog/entry/${entry.id}" target="_blank">${entry.title}</a></p>`;
-    })
-    .filter(Boolean)
-    .join('');
-
-  if (!content) return;
-
-  div.innerHTML = `<h4>User Blog Entries</h4>` + content;
-}
-
-// 5. Tag Frequency
+// 4. Tag Frequency
 export function showTagFrequency(data) {
   const div = document.getElementById("tags");
   if (!div || !data || typeof data !== 'object' || Object.keys(data).length === 0) return;
@@ -136,7 +117,7 @@ export function showTagFrequency(data) {
   renderTagChart(data);
 }
 
-// 6. Language Usage
+// 5. Language Usage
 export function showMostUsedLanguage(language) {
   const div = document.getElementById("language");
   if (!div || !language) return;
@@ -163,7 +144,7 @@ export function showMostUsedLanguage(language) {
   else infoDiv.innerHTML = `<p>No data available.</p>`;
 }
 
-// 7. Heatmaps
+// 6. Heatmaps
 export function showTagHeatmap(submissions) {
   const div = document.getElementById("tagHeatmap");
   if (!div || !Array.isArray(submissions) || submissions.length === 0) return;
@@ -181,7 +162,7 @@ export function showTagHeatmap(submissions) {
   renderTagHeatmap("tagHeatmapCanvas", submissions);
 }
 
-// 8. Performance Trend
+// 7. Performance Trend
 export function showPerformanceTrend(data) {
   const div = document.getElementById("performance");
   if (!div || !Array.isArray(data) || data.length === 0) return;
@@ -204,7 +185,7 @@ export function showPerformanceTrend(data) {
 }
 
 
-// 9. Difficulty Chart
+// 8. Difficulty Chart
 export function showDifficultyDistribution(submissions) {
   const div = document.getElementById("difficulty");
   if (!div || !Array.isArray(submissions)) return;
@@ -228,7 +209,7 @@ export function showDifficultyDistribution(submissions) {
   renderDifficultyChart(difficultyCount);
 }
 
-// 10. Verdict Breakdown
+// 9. Verdict Breakdown
 export function showVerdictBreakdown(submissions) {
   const div = document.getElementById("verdicts");
   if (!div || !Array.isArray(submissions)) return;
@@ -250,7 +231,7 @@ export function showVerdictBreakdown(submissions) {
   renderVerdictChart(verdictCount);
 }
 
-// 11. Activity Heatmap
+// 10. Activity Heatmap
 export function showActivityHeatmap(submissions) {
   const div = document.getElementById("activityCalendar");
   if (!div || !Array.isArray(submissions)) return;
